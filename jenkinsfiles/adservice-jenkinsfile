@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GIT_REPO_NAME = "micro-service"
+        GIT_REPO_NAME = "microservice-deployment"
         GIT_EMAIL = "221865701+hemanthdugga@users.noreply.github.com"
         GIT_USER_NAME = "hemanthdugga"
         IMAGE_NAME = "adservice"
