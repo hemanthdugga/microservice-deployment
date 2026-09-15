@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -10,10 +9,18 @@ pipeline {
         )
     }
 
+    environment {
+        TMPDIR       = "${WORKSPACE}/.tmp"
+        TF_IN_AUTOMATION = "1"
+        TF_LOG        = "ERROR"
+        TF_LOG_PATH   = "${WORKSPACE}/tf.log"
+    }
+
     stages {
         stage('Checkout from Git') {
             steps {
                 echo 'Checking out Git repository...'
+                sh 'mkdir -p "$TMPDIR"'
             }
         }
 
@@ -26,7 +33,7 @@ pipeline {
         stage('Terraform init') {
             steps {
                 dir('ecr-terraform') {
-                    sh 'terraform init'
+                    sh 'terraform init -upgrade -input=false'
                 }
             }
         }
@@ -42,7 +49,7 @@ pipeline {
         stage('Terraform plan') {
             steps {
                 dir('ecr-terraform') {
-                    sh 'terraform plan'
+                    sh 'terraform plan -input=false -out=tfplan'
                 }
             }
         }
@@ -53,7 +60,7 @@ pipeline {
             }
             steps {
                 dir('ecr-terraform') {
-                    sh 'terraform apply -auto-approve'
+                    sh 'terraform apply -input=false tfplan'
                 }
             }
         }
@@ -64,9 +71,16 @@ pipeline {
             }
             steps {
                 dir('ecr-terraform') {
-                    sh 'terraform destroy -auto-approve'
+                    sh 'terraform destroy -auto-approve -input=false'
                 }
             }
+        }
+    }
+
+    post {
+        failure {
+            archiveArtifacts artifacts: 'tf.log', allowEmptyArchive: true
+            sh 'tail -100 "$TF_LOG_PATH" || true'
         }
     }
 }
