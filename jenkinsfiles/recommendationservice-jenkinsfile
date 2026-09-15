@@ -28,20 +28,20 @@ pipeline {
             }
         }
 
-                stage('Trivy Image Scan') {
+                      stage('Trivy Image Scan') {
             steps {
                 script {
                     sh '''
                         echo "Scanning Docker image with Trivy..."
 
-                        # Informational: full report, never blocks
+                        # Full report - informational, never blocks
                         trivy image \
                         --severity HIGH,CRITICAL \
                         --no-progress \
                         --skip-version-check \
                         recommendationservice:latest
 
-                        # Gate: fail only on fixable CRITICALs
+                        # Gate - fails only on CRITICALs that have a patch available
                         trivy image \
                         --severity CRITICAL \
                         --ignore-unfixed \
