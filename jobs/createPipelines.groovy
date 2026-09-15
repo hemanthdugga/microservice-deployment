@@ -1,4 +1,4 @@
-def repoUrl = "https://github.com/gsharma1298/micro-service.git"
+def repoUrl = "https://github.com/hemanthdugga/microservice-deployment.git"
 
 def pipelineFiles = [
     "adservice-jenkinsfile",
@@ -33,7 +33,7 @@ pipelineFiles.each { file ->
                         remote {
                             url(repoUrl)
                         }
-                        branch("*/master")
+                        branch("*/main")
                     }
                 }
                 scriptPath("jenkinsfiles/${file}")
