@@ -11,8 +11,8 @@ pipeline {
 
         stage('Checkout from Git') {
             steps {
-                git branch: 'master',
-                    url: 'https://github.com/gsharma1298/micro-service.git'
+                git branch: 'main',
+                    url: 'https://github.com/hemanthdugga/microservice-deployment.git'
             }
         }
 
@@ -52,15 +52,15 @@ pipeline {
                         aws ecr get-login-password --region ap-south-1 | \
                         docker login \
                         --username AWS \
-                        --password-stdin 623577189957.dkr.ecr.ap-south-1.amazonaws.com
+                        --password-stdin 294500578333.dkr.ecr.ap-south-1.amazonaws.com
 
                         # Tag Docker image
                         docker tag recommendationservice:latest \
-                        623577189957.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice:${BUILD_NUMBER}
+                        294500578333.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice:${BUILD_NUMBER}
 
                         # Push Docker image
                         docker push \
-                        623577189957.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice:${BUILD_NUMBER}
+                        294500578333.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice:${BUILD_NUMBER}
                     '''
                 }
             }
@@ -68,11 +68,11 @@ pipeline {
 
         stage('Update Deployment file') {
             environment {
-                GIT_REPO_NAME = "micro-service"
-                GIT_EMAIL = "gsharma1298@gmail.com"
-                GIT_USER_NAME = "gsharma1298"
+                GIT_REPO_NAME = "microservice-deployment"
+                GIT_EMAIL = "221865701+hemanthdugga@users.noreply.github.com"
+                GIT_USER_NAME = "hemanthdugga"
                 IMAGE_NAME = "recommendationservice"
-                REPO_URL = "623577189957.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice"
+                REPO_URL = "294500578333.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice"
                 YAML_FILE = "recommendationservice.yaml"
             }
 
@@ -104,7 +104,7 @@ pipeline {
 
                                 git push \
                                 https://${git_token}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git \
-                                HEAD:master
+                                HEAD:main
                             fi
                         '''
                     }
