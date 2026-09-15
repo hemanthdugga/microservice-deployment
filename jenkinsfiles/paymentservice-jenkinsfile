@@ -43,7 +43,7 @@ pipeline {
             environment {
                 GIT_REPO_NAME = "microservice-deployment"
                GIT_EMAIL = "221865701+hemanthdugga@users.noreply.github.com"
-                GIT_USER_NAME = "hemanthduggas"
+                GIT_USER_NAME = "hemanthdugga"
                 IMAGE_NAME = "paymentservice"
                 REPO_URL = "294500578333.dkr.ecr.ap-south-1.amazonaws.com/paymentservice"
                 YAML_FILE = "paymentservice.yaml"
