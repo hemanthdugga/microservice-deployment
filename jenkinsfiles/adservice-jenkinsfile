@@ -1,12 +1,12 @@
 pipeline {
-    agent any 
+    agent any
 
     environment {
         GIT_REPO_NAME = "micro-service"
-        GIT_EMAIL = "gsharma1298@gmail.com"
-        GIT_USER_NAME = "gsharma1298"
+        GIT_EMAIL = "221865701+hemanthdugga@users.noreply.github.com"
+        GIT_USER_NAME = "hemanthdugga"
         IMAGE_NAME = "adservice"
-        REPO_URL = "623577189957.dkr.ecr.ap-south-1.amazonaws.com/adservice"
+        REPO_URL = "294500578333.dkr.ecr.ap-south-1.amazonaws.com/adservice"
         YAML_FILE = "adservice.yaml"
         GIT_TOKAN = credentials('git-tokan')
     }
@@ -20,7 +20,7 @@ pipeline {
 
         stage('Checkout from Git') {
             steps {
-                git branch: 'master', url: 'https://github.com/gsharma1298/micro-service.git'
+                git branch: 'master', url: 'https://github.com/hemanthdugga/microservice-deployment.git'
             }
         }
 
@@ -40,9 +40,9 @@ pipeline {
             steps {
                 script {
                     sh '''
-                aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 623577189957.dkr.ecr.ap-south-1.amazonaws.com    
-		docker tag adservice:latest 623577189957.dkr.ecr.ap-south-1.amazonaws.com/adservice:${BUILD_NUMBER}
-                    docker push 623577189957.dkr.ecr.ap-south-1.amazonaws.com/adservice:${BUILD_NUMBER}
+                aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 294500578333.dkr.ecr.ap-south-1.amazonaws.com
+		docker tag adservice:latest 294500578333.dkr.ecr.ap-south-1.amazonaws.com/adservice:${BUILD_NUMBER}
+                    docker push 294500578333.dkr.ecr.ap-south-1.amazonaws.com/adservice:${BUILD_NUMBER}
                     '''
                 }
             }
